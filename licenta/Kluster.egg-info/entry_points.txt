@@ -1,0 +1,5 @@
+[console_scripts]
+client = licenta.client:main
+provider = licenta.provider:main
+tracker = licenta.tracker:main
+
