@@ -30,6 +30,7 @@ class DAO:
 
     def get_providers(self, service_name=None, max_price=None):
         with self.session_getter() as session:
+            print(session.query)
             query = session.query(Peer).filter(Peer.is_online == 1)
             if service_name:
                 query = query.filter(Peer.services.any(
