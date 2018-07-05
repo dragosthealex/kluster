@@ -59,6 +59,7 @@ def register_peer():
 @APP.route('/get-rating', methods=['GET'])
 def get_rating():
     rating = _DAO.get_rating(request.args.get('address'))
+    return _json_success(rating)
 
 
 def main():
