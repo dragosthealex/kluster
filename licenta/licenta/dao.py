@@ -82,7 +82,22 @@ class DAO:
                         .first())
             if not provider:
                 raise ValueError('Invalid address.')
-            provider.rating += rating
+
+            provider.rating_count += 1
+            if provider.rating_count == 1:
+                provider.rating = rating
+            else:
+                provider.rating += ((rating - provider.rating)
+                                    / provider.rating_count)
+
+    def get_rating(self, address):
+        print('Getting rating for {}'.format(address))
+        with self.session_getter() as session:
+            peer = (session.query(Peer).filter(Peer.address == address)
+                    .first())
+            if not peer:
+                raise ValueError('Invalid address.')
+            return peer.rating
 
 
 if __name__ == '__main__':

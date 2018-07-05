@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, \
-    Boolean
+    Boolean, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
@@ -25,7 +25,8 @@ class Peer(_KlusterBase):
     address = Column(String(255))
     ip_address = Column(String(15))
     port = Column(Integer)
-    rating = Column(Integer, nullable=True, default=0)
+    rating = Column(Float, nullable=True, default=0)
+    rating_count = Column(Integer, nullable=True, default=0)
     is_online = Column(Boolean, default=False)
 
     services = relationship('PeerServiceAssociation', back_populates='peer',
