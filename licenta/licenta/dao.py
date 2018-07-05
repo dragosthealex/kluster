@@ -94,7 +94,7 @@ class DAO:
         print('Getting rating for {}'.format(address))
         with self.session_getter() as session:
             peer = (session.query(Peer).filter(Peer.address == address)
-                      .first())
+                    .first())
             if not peer:
                 raise ValueError('Invalid address.')
             return peer.rating

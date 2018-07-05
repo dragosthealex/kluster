@@ -1,6 +1,9 @@
+import json
 from argparse import ArgumentParser
+import bitcoin as b
 
-from licenta.constants import CLIENT_ADDRESS
+from licenta.constants import CLIENT_ADDRESS, PROVIDER_ADDRESS, \
+    CLIENT_PRIVATE_KEY
 from licenta.peer_node import PeerNode
 
 from licenta.utils import validate_args
@@ -22,6 +25,13 @@ class Client(PeerNode):
 
     def send_contribution(self, ip, port, service_name, contribution):
         base_url = 'http://{}:{}'.format(ip, port)
+
+        # pub = b.privtopub(CLIENT_PRIVATE_KEY)
+        # pickledstring = json.dumps({pub, PROVIDER_ADDRESS,
+        #                             contribution})
+        # msghash = b.sha256(pickledstring)
+        # v, r, s = b.ecdsa_raw_sign(msghash, CLIENT_PRIVATE_KEY)
+
         resp = self.request('/contribution', base_url, args={
             'service_name': service_name,
             'contribution': contribution,
