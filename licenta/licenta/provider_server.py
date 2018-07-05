@@ -14,7 +14,7 @@ def take_request():
     print('Got a request from {} for {} service.'.format(
             peer_address, service_name
     ))
-
+    # check rating when get request
     return _json_success('YES')
 
 
@@ -27,7 +27,8 @@ def take_contribution():
     print('Got {} contribution from {} for {} service.'.format(
             amount, peer_address, service_name
     ))
-
+    # save latent contrib
+    # w3py
     return _json_success('THANK')
 
 

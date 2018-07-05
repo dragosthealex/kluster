@@ -44,19 +44,21 @@ def update_peer_rating():
     rating = int(rating) if rating else 0
     _DAO.update_rating(address, rating)
     return _json_success('Updated.')
+    # average rating of 5
 
 
 @APP.route('/register-peer', methods=['GET'])
 def register_peer():
+    # script to spam these
     _DAO.register_peer(address=request.args.get('address'),
                        ip_address=request.args.get('ip_address'),
                        port=int(request.args.get('port')),
                        services=json.loads(request.args.get('services')))
 
 
-def rate_peer(address, rating):
-    # Called by whatever
-    pass
+@APP.route('/get-rating', methods=['GET'])
+def get_rating():
+    rating = _DAO.get_rating(request.args.get('address'))
 
 
 def main():
