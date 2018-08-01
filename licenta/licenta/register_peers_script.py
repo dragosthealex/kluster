@@ -11,10 +11,11 @@ if __name__ == '__main__':
                 SERVICE_NAMES[Services.ROCKET_LEAGUE]: 20}
     parser = argparse.ArgumentParser()
     parser.add_argument('--number', help='Number of peers to register',
-                        type=int, default=5)
+                        type=int, default=10000)
     args = parser.parse_args()
     dao = DAO()
     for n in range(args.number):
+        print(n)
         address = ''.join(random.choice(string.ascii_uppercase
                                         + string.digits) for _ in range(10))
         dao.register_peer(address=address, ip_address=PROVIDER_HOST,

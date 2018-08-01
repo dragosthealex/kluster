@@ -4,6 +4,7 @@ Provides methods to access the data in db
 """
 from contextlib import contextmanager
 
+import time
 from licenta.constants import SERVICE_NAMES, \
     Services, PROVIDER_HOST, PROVIDER_PORT, PROVIDER_ADDRESS, CLIENT_ADDRESS
 
@@ -49,6 +50,7 @@ class DAO:
             peer = Peer(address=address,
                         ip_address=ip_address,
                         port=port,
+                        is_online=True,
                         rating=0)
             # Add services as provider
             for service_name, price in services.items():
@@ -102,14 +104,16 @@ class DAO:
 
 if __name__ == '__main__':
     dao = DAO()
-    services = {SERVICE_NAMES[Services.MINECRAFT]: 10,
-                SERVICE_NAMES[Services.ROCKET_LEAGUE]: 20}
-    dao.register_peer(address=PROVIDER_ADDRESS, ip_address=PROVIDER_HOST,
-                      port=PROVIDER_PORT, services=services)
-    dao.register_peer(address=CLIENT_ADDRESS, ip_address='localhost',
-                      port='0.0.0.0', services={})
+    # services = {SERVICE_NAMES[Services.MINECRAFT]: 10,
+    #             SERVICE_NAMES[Services.ROCKET_LEAGUE]: 20}
+    # dao.register_peer(address=PROVIDER_ADDRESS, ip_address=PROVIDER_HOST,
+    #                   port=PROVIDER_PORT, services=services)
+    # dao.register_peer(address=CLIENT_ADDRESS, ip_address='localhost',
+    #                   port='0.0.0.0', services={})
+    start = time.time()
     providers = dao.get_providers(
             service_name=SERVICE_NAMES[Services.MINECRAFT],
             max_price=100
     )
+    print('Took {} seconds'.format(time.time() - start))
     print(providers)

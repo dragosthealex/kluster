@@ -1,7 +1,1 @@
-[
-  "licenta/tests/test_dao.py::test_get_providers",
-  "licenta/tests/test_dao.py::test_register_peer",
-  "licenta/tests/test_dao.py::test_update_status",
-  "licenta/tests/test_dao.py::test_update_rating",
-  "licenta/tests/test_tracker.py::test_get_providers"
-]
+[]

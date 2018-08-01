@@ -1,0 +1,32 @@
+The problem: 
+For Online Multiplayer Video Games, developers and publishers have two options when it comes to servers:
+1. Build the infrastructure in-house
+2. Outsource the infrastructure, by renting servers from large companies
+3. Relying on people 'donating' the servers and hosting themselves
+
+Method 1 is generally very expensive and involves a number of costs and upfront investments. Aquiring the space, hardware, software, qualified engineers and setting everything up can be prohibitively expensive, especially for small and medium Video Game companies. It also takes time and human resources, delaying the release of the end product - the actual game.
+
+Second method is generally what most companies go with, but it can be fairly expensive as well. Depending on location and features needed, the most basic servers (AWS, gameservers.com, Unity Multiplayer) start at around $70-$100 per month. But scaling up, the costs increase almost exponentially. Increasing the number of locations around the world, the costs increase even more. It is not hard for the prices to go to more than $100k per year just for servers.
+
+Third method is generally just used in combination with one of the first two. You cannot rely on people's goodwill, as they consume power and gain nothing in return. Thus they do not have any incentive to run your servers, and only a few of them will, with a likely bias for the locations where power is cheaper. Moreover, people who do not have / play the game will not host any servers.
+
+
+The solution:
+The KlusterNet architecture provides a way of incentivizing people to run servers, effectively creatin a crowdsourced infrastructure-as-a-service. By implementing a reward system for the providers, the clients who connect to the servers will compensate the people hosting them for their effort. Using a network-wide rating system ensures both the Clients and the Providers are pressured in behaving truthfully (i.e. any scammer would be instantly taxed by this and isolated by other peers).
+
+Kluster protocol consists of multiple components: 
+1. A language-agnostic, game engine-agnostic SDK (plugin) to be included in the Client code. This will notify the network when a client wants to search for a server or to connect to one.
+2. Kluster Desktop Client, which communicates with all the Games implementing the SDK, and negotiates the connections and payments.
+3. Kluster Commander program, which is able to download servers from a certified repository and run them in a sandboxed environment when clients want to connect. 
+4. KlusterCoin Blockchain cryptocurrency, which is used as a reward system between clients and providers. Both the Desktop Client and the Commander programs have a wallet functionality that allows transactions with KlusterCoin.
+5. KlusterNet Tracker, which is a web-deployed service that matches Clients with Providers based on availability and  other requirements. The tracker also manages the rating and makes sure the system behaves fairly for all peers.
+
+Using the KlusterNet services would be considerably cheaper for publishers, as the business model relies on a very small fee on the providers' earnings (1% of all client->provider transactions). Publishers would only need to pay a substantially lower price for subscribing to the service, and it will increase very slowly with the number of players scaling up.
+
+Because anyone in any corner of the world will be able to download the Kommander and run a server, and will be very incentivized to do so, the location problem is solved by itself. The network self-regulates through the supply and demand model. For example: If there is a surge of players needing to play AwesomeGame in South Europe, but most servers are in East Asia, the latency will be a strong factor. Thus, Providers in South Europe will see that running AwesomeGame servers in their area becomes more and more lucrative, and the numbers will start increasing, tending towards a balance.
+
+Through its distributed architecture, KlusterNet manages to reduce the upfront costs for publishers to zero, vastly reduce their monthly costs, while also greatly increasing availability and geo-availability and creating an entirely innovative free market.
+
+
+Short summary:
+KlusterNet provides an architecture that allows crowd-sourced infrastructure-as-a-service, primarily aimed at Video Game Producers. We aim to reduce the massive costs involved in setting up a reliable network of servers, by incentivizing users to host themselves through a blockchain-powered reward system.

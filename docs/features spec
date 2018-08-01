@@ -1,0 +1,120 @@
+SDK specification:
+
+
+Provider
+
+This is a SDK library that is used by the server. It needs to be able to accept and 
+verify connections from the users.
+
+
+Provider attributes:
+Get everything from KlusterCommand
+
+-	NetworkAddress network_address
+IP and PORT for connection
+
+-	int service_ID
+the ID of this particular service
+
+-	float price
+the price we offer this service for. user or auto-configured by KlusterCommand
+
+-	float rating
+Our rating out of 10
+
+-	float min_rating
+min rating that we would accept connections from
+
+-	float availability 
+How much does this provider interrupt sessions / how much time does it stay online
+
+-	??? schedule 
+Schedule when it is going to be available to provide this service
+
+
+Provider methods:
+
+-	float get_client_rating(int client_ID)
+should return the rating out of 10 for the client
+
+- 	private void on_client_request(NetworkAddress client_network_address, price)
+Is called when client tried to request
+> gets the client_ID from the address
+> checks the rating, makes sure it is over min rating we provide for
+> if rating too low, return RatingTooLow error and deny request
+> verifies the client message using its public key
+> if invalid return CorruptedMessage error and deny request
+> call this.start_providing() to let tracker know we accept the request
+
+
+- 	bool on_client_connect(NetworkAddress client_network_address)
+should be called when the client connects in the code, and let them continue
+if True, and disconnect them if False
+> check if this.is_providing() for the client
+> if not, it means they tried to connect anyway, return False to reject
+
+- 	void on_client_disconnect(NetworkAddress client_network_address)
+should be called when client disconnects in the code
+> call this.stop_providing()
+
+-	void start_providing(NetworkAddress client_network_address, float price)
+> let tracker know we start providing service_id for client_ID
+
+- 	void stop_providing(NetworkAddress client_network_address)
+> let tracker know we stopped providing
+> let tracker know we expect transaction from client by sending the
+request that we stored initially, which is signed by the client.
+
+
+
+Client
+
+The client module will be a library that the game dev needs to use in the game. 
+It maps to a service on the tracker, by the service_ID.
+It needs to expose a list of providers and to request a connexion to one of them.
+
+
+Client attributes:
+
+-	NetworkAddress network_address
+IP:PORT address
+
+- 	int service_ID
+the service the client is for
+
+-	float rating
+rating out of 10
+
+-	max_price
+the max price we want to pay for the service
+
+- 	min_rating
+user-configured min ratings for subscribed services
+
+
+methods of client:
+-	Dictionary<NetworkAddress, ProviderData> get_providers()
+> connect to tracker and query available providers 
+> filter by our max_price and our min_rating requirements
+> filter by our rating and their min_rating requirements
+
+-	bool connect_to_server(NetworkAddress provider_network_address, price)
+Should be called before connecting to http server in the game code
+> Send a request to connect to server, signed with our key, including service and agreed price
+> If accepted, call start_requesting()
+
+-	void start_requesting(NetworkAddress provider_network_address, price)
+> let tracker know that we are starting to consume the service
+and agreed for a specific price
+
+- void stop_requesting(NetworkAddress provider_network_address)
+> let tracker know that we stopped consuming
+
+
+
+
+ProviderData
+
+-	provider_ID
+- 	price
+-	rating
